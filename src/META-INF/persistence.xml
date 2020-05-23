@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="Proyecto" transaction-type="JTA">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>java:global/DataSource</jta-data-source>
+		<class>entidades.Comentario</class>
+		<class>entidades.Departamento</class>
+		<class>entidades.Estadoincidencia</class>
+		<class>entidades.Grupousuario</class>
+		<class>entidades.GrupousuarioPK</class>
+		<class>entidades.Incidencia</class>
+		<class>entidades.Prioridad</class>
+		<class>entidades.Role</class>
+		<class>entidades.Usuario</class>
+	</persistence-unit>
+</persistence>

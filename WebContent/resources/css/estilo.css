@@ -1,0 +1,51 @@
+html {
+  min-height: 100%;
+  position: relative;
+}
+body {
+	background-color: #ffffff;
+	font-family:Verdana, Geneva, sans-serif;
+	margin: 0 0 40px;
+}
+.advertencia{
+	color:red;}
+.filaimpar ,.list-header{background-color: #00c1f0;}.filapar{}
+header {
+    margin-right:auto;
+    margin-left:auto;
+    width: 1154px; 
+}
+#restabla{
+	font-size: medium;
+	border-collapse: collapse;
+
+}
+#restabla td{
+	border: 1px solid black;
+}
+#logo{
+	margin-top:-10px;
+}
+#menu{
+	font-size: 16px;
+    margin-top:20px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 640px;
+}
+#contenido{
+	margin-right: auto;
+	margin-left: auto;
+	background-color:#F1F3F5;
+	width: 800px;
+	font-size: 18px;
+
+}
+#footer{
+	text-align:center;
+    width: 100%;
+    bottom: 0;
+    position:absolute;
+    height: 40px;
+}
+
