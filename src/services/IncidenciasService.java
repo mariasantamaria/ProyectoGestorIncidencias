@@ -87,7 +87,7 @@ public class IncidenciasService {
         	return listaIncidenciasUsuario;
        	}else {
        	 //PRIMER CASO ADMIN O MANAGER
-       		System.out.println("admin o manager");
+       		System.out.println("admin o manager listado");
        		Query consulta = em.createQuery("select i " + 
            			"from Incidencia i " + 
            			"where upper(i.estadoincidencia.idEstado) like upper(:tipoincidencia) " + 
@@ -135,7 +135,7 @@ public class IncidenciasService {
         	List<Incidencia> listatotalusuarios = consultausuario.getResultList();
         	return listatotalusuarios.size();
        	}else {
-       	System.out.println("admin o manager");
+       	System.out.println("admin o manager paginado");
        	 //PRIMER CASO ADMIN O MANAGER
        		Query consulta = em.createQuery("select i " + 
            			"from Incidencia i " + 
@@ -157,27 +157,58 @@ public class IncidenciasService {
      * prioridad
      * departamento null -lo asigna el manager
      * usuario que realia la incidencia*/
-    public void insertarIncidencia(String usuario, Long idPrioridad, String detalleIncidencia ) throws RollbackException   {
+    public void insertarIncidencia(String usuario, Prioridad p,Incidencia i, Comentario c ) throws RollbackException   {
     	Usuario usarioIncidencia =em.find(Usuario.class, usuario);
     	//nueva
     	Estadoincidencia estadoIncidencia= em.find(Estadoincidencia.class,1L);
-    	Prioridad prioridad =em.find(Prioridad.class, idPrioridad);
-    	Incidencia i = new Incidencia();
+    	System.out.println("id:"+i.getIdIncidencia());
     	i.setDepartamento(null);
-    	i.setPrioridadBean(prioridad);
+    	i.setPrioridadBean(p);
     	//ASUNTO DE LA INCIDENCIA
-    	i.setDetalleIncidencia(detalleIncidencia);
     	i.setEstadoincidencia(estadoIncidencia);
     	i.setFechaIncidencia(new Date());
     	i.setUsuarioBean(usarioIncidencia);
+    	if(c.getDetallesComentario() != null) {
+   
+
+    		c.setFechaComentario(new Date());
+    		c.setIncidencia(i);
+    		c.setUsuario(usarioIncidencia);
+    	}
     	//Comentario c= new Comentario();
     	try {	
 			em.persist(i);
+			if (c != null) {
+				em.persist(c);
+			}
 		}catch (RollbackException rbe) {
 			throw rbe;
 		}
     	
     }
-    //insertar comentario
-    
+    //actualizar incidencia al editar
+    public Incidencia actualizarIncidencia (Incidencia i) throws EJBException {
+    	try {
+			return  em.merge(i);	
+		} catch (EJBException e) {
+			// TODO: handle exception
+			throw e;
+		}
+    }
+    public Long getId() {
+    	Query consulta = em.createQuery("select max(i.idIncidencia) from Incidencia i ");
+    	Long max = (Long) consulta.getSingleResult();
+    	System.out.println("ultimo id incidencia:"+max);
+    	return max+1;
+    }
+    public Incidencia getIncidenciaById(long idincidencia) {
+		return em.find(Incidencia.class, idincidencia);
+	}
+    public long getTotalFiltro(String tipo) {
+    	Query consulta = em.createQuery("SELECT count(inc) FROM Incidencia inc where UPPER(inc.estadoincidencia.idEstado) LIKE UPPER(:tipo)");
+    	consulta.setParameter("tipo",tipo);
+    	return (Long) consulta.getSingleResult();
+    	
+    	
+	}
 }

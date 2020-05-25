@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import entidades.Role;
+import entidades.Usuario;
 
 /**
  * Session Bean implementation class RolesService
@@ -30,4 +31,9 @@ public class RolesService {
 		return em.createQuery("select r from Role r where r.idRoles=:id order by r.idRoles").setParameter("id", id)
 				.getResultList();
 	}
+    public Long getRolPorNombre(String nombreusuario) {
+    	Usuario u=em.find(Usuario.class, nombreusuario);
+    	Long rol =u.getRoles().get(0).getIdRoles();
+    	return rol;
+    }
 }

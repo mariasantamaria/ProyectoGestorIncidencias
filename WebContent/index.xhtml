@@ -1,48 +1,18 @@
-<!DOCTYPE html >
+<!DOCTYPE html > 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
-
-<h:head>
-
-</h:head>
-<h:body> 
-<a href="/Proyecto/administrador/NuevoUsuario.xhtml">Nuevo Usuario</a>
-
-<a href="/Proyecto/user/nuevaIncidencia.xhtml">Nueva Incidencia</a>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
 <h:panelGroup id="panelTab" styleClass="panelTabla"
-		rendered="#{backingListadoIncidencias.paginacion.itemsCount>0}"
-		layout="block">
-		
-	<h:form>
-			<fieldset>
-				<legend>Listar Libros</legend>
-				<h:panelGrid id="panel" columns="3" border="0">
-					<h:selectOneMenu value="#{backingListadoIncidencias.tipoBusqueda}"
-						id="selectTipoBusqueda">
-						<f:selectItem itemLabel="Nueva" itemValue="1" />
-						<f:selectItem itemLabel="En espera" itemValue="2" />
-						<f:selectItem itemLabel="Abierta" itemValue="3" />
-						<f:selectItem itemLabel="Resuelta" itemValue="4" />
-						<f:selectItem itemLabel="Cerrada" itemValue="5" />
-						<f:selectItem itemLabel="Todo" itemValue="%" />
-					</h:selectOneMenu>
-					<h:commandButton
-						action="#{backingListadoIncidencias.getListadoIncidenciasRango()}"
-						value="Buscar">
-						<f:ajax execute="@form" 
-						listener="#{backingListadoIncidencias.resetPaginacion}"
-						render="@all"></f:ajax>
-					</h:commandButton>
-				</h:panelGrid>
-			</fieldset>
-		</h:form>
+		rendered="#{backingAperturaIncidencia.paginacion.itemsCount>0}"
+		layout="block">	
 		<h:form id="frmResultadoBusquedaIncidencias" prependId="false">
-			<h:dataTable styleClass="tabla" id="tablaincidencias" var="incidencia"
-				value="#{backingListadoIncidencias.listadoIncidencias}">
+			<h:dataTable styleClass="tabla" id="tablasocios" var="incidencia"
+				value="#{backingAperturaIncidencia.listadoIncidencias}">
 				<f:facet name="header">
-					<h:outputText value="Listado de Incidencias"></h:outputText>
+					<h:outputText value="incidenciasss"></h:outputText>
 				</f:facet>
 				<h:column id="IdIncidencia">
 					<f:facet name="header">
@@ -50,6 +20,14 @@
 						</h:outputText>
 					</f:facet>
 					<h:outputText value="#{incidencia.idIncidencia}">
+					</h:outputText>
+				</h:column>
+				<h:column id="Usuario">
+					<f:facet name="header">
+						<h:outputText value="Usuario">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{incidencia.usuarioBean.nombre}">
 					</h:outputText>
 				</h:column>
 				<h:column id="detalleIncidencia">
@@ -66,6 +44,7 @@
 						</h:outputText>
 					</f:facet>
 					<h:outputText value="#{incidencia.fechaIncidencia}">
+					<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 					</h:outputText>
 				</h:column>
 				<h:column id="estadoincidencia">
@@ -76,39 +55,64 @@
 					<h:outputText value="#{incidencia.estadoincidencia.descripcionEstado}">
 					</h:outputText>
 				</h:column>
+				<h:column id="prioridad">
+					<f:facet name="header">
+						<h:outputText value="prioridad">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{incidencia.prioridadBean.descripcionPrioridad}">
+					</h:outputText>
+				</h:column>
+				<h:column id="enlace">
+					<f:facet name="header">
+						<h:outputText value="Apertura">
+						</h:outputText>
+					</f:facet>
+					<h:link value="Editar" outcome="editarIncidencia">
+					<f:param name="idIncidencia" value="#{incidencia.idIncidencia}" />
+				</h:link>
+				</h:column>
 			</h:dataTable>
-
 		</h:form>
 		<h:form id="frmListadoIncidencias" prependId="false">
 
 			<div class="navegacionTabla">
 				<h:outputText
-					value="Mostrando #{backingListadoIncidencias.paginacion.primerElementoPagina}..#{backingListadoIncidencias.paginacion.ultimoElementoPagina} de #{backingListadoIncidencias.paginacion.itemsCount}" />
+					value="Mostrando #{backingAperturaIncidencia.paginacion.primerElementoPagina}..#{backingAperturaIncidencia.paginacion.ultimoElementoPagina} de total: #{backingAperturaIncidencia.paginacion.itemsCount}" />
 
 				<h:commandLink id="anterior" value="Anterior">
 					<f:ajax execute="@form" render="@all"
-					rendered="#{backingListadoIncidencias.paginacion.hayPaginaAnterior}"
-						listener="#{backingListadoIncidencias.paginaAnterior()}" />
+					rendered="#{backingAperturaIncidencia.paginacion.hayPaginaAnterior}"
+						listener="#{backingAperturaIncidencia.paginaAnterior()}" />
 				</h:commandLink>
 
 				<h:commandLink id="siguiente" value="Siguiente">
 					<f:ajax execute="@form" render="@all"
-					rendered="#{backingListadoIncidencias.paginacion.hayPaginaAnterior}"
-						listener="#{backingListadoIncidencias.paginaSiguiente()}" />
+					rendered="#{backingAperturaIncidencia.paginacion.hayPaginaAnterior}"
+						listener="#{backingAperturaIncidencia.paginaSiguiente()}" />
 				</h:commandLink>
-
+				<h:outputText value="Nº Resgistros a Mostrar"></h:outputText>
 				<h:selectOneMenu id="slctpaginacion"
-					value="#{backingListadoIncidencias.slctnrpag}">
+					value="#{backingAperturaIncidencia.slctnrpag}">
 					<f:selectItem itemLabel="5" itemValue="5" />
 					<f:selectItem itemLabel="10" itemValue="10" />
 					<f:selectItem itemLabel="15" itemValue="15" />
 					<f:selectItem itemLabel="20" itemValue="20" />
-					<f:ajax listener="#{backingListadoIncidencias.resetPaginacion}"
+					<f:ajax listener="#{backingAperturaIncidencia.resetPaginacion}"
 						render="@all" />
 				</h:selectOneMenu>
 			</div>
 	</h:form>
 	</h:panelGroup>
-</h:body>
+	</ui:define>
+	<ui:define name="title">Inicio</ui:define>
+</ui:composition>
+
+<h:head>
+
+</h:head> 
+<h:body> 
+
+</h:body> 
 </html>
 

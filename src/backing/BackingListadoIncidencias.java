@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import entidades.Incidencia;
 import services.IncidenciasService;
+import services.RolesService;
 import util.PaginacionHelper;
 
 @Named
@@ -23,11 +24,14 @@ public class BackingListadoIncidencias implements Serializable{
 	private PaginacionHelper paginacion;
 	private int slctnrpag = 5;
 	private String nombreusuario=usuarioEc.getRemoteUser();
+	private Long idrol=0L;
 	List<Incidencia>listadoIncidencias=null;
 	List<Incidencia>listadoIncidenciasRango=null;
 	private String tipoBusqueda="%";
 	@EJB
 	 IncidenciasService incidenciaService;
+	@EJB
+	 RolesService rolService;
 	
 	public BackingListadoIncidencias() {
 		// TODO Auto-generated constructor stub
@@ -42,6 +46,8 @@ public class BackingListadoIncidencias implements Serializable{
 				}
 			};
 		}
+		
+	//System.out.println("id rol del usuario es"+idrol);
 		listadoIncidencias = incidenciaService.listadoIncidenciasPorUsuario(paginacion.getPagina() * paginacion.getNrpag(),paginacion.getNrpag(),tipoBusqueda, nombreusuario);
 	}
 	public PaginacionHelper getPaginacion() {
@@ -54,6 +60,12 @@ public class BackingListadoIncidencias implements Serializable{
 	
 	public List<Incidencia> getListadoIncidencias() {
 		return listadoIncidencias;
+	}
+	public Long getIdrol() {
+		return idrol;
+	}
+	public void setIdrol(Long idrol) {
+		this.idrol = idrol;
 	}
 	public String getNombreusuario() {
 		return nombreusuario;
@@ -127,9 +139,13 @@ public class BackingListadoIncidencias implements Serializable{
 		listadoIncidencias = incidenciaService.listadoIncidenciasPorUsuario(paginacion.getPagina() * paginacion.getNrpag(),
 				paginacion.getNrpag(),tipoBusqueda,nombreusuario);
 	}
+	public String editarIncidencia() {
+		return "/user/editarIncidencia.xhtml&facesredirect=true";
+	}
 	/**************************************************************************/
 	public void getListadoIncidenciasRango() {
 		paginacion=null;
+		idrol=rolService.getRolPorNombre(nombreusuario);
 		ini();
 	}
 }

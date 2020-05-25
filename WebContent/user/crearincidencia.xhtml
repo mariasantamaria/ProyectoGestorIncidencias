@@ -1,11 +1,34 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
 
-<h:head></h:head> 
-<body> 
-
-</body> 
+<h:head></h:head>
+<body>
+	<a href="../user/home.xhtml">Volver</a>
+	<h:form>
+		<h:messages globalOnly="true" layout="table" infoClass="advertencia"></h:messages>
+		<h:panelGrid>
+			<h:outputLabel value="Prioridad" />
+			<h:selectOneMenu
+					value="#{backingInsertarIncidencia.prioridadseleccionada}">
+					<f:selectItem itemLabel="Selecciona Prioridad"
+						itemValue="0" />
+					<f:selectItems value="#{backingInsertarIncidencia.listadoPrioridades}"
+						var="departamento" itemValue="#{departamento.idPrioridad}"
+						itemLabel="#{departamento.descripcionPrioridad}" />
+				</h:selectOneMenu>
+			<h:outputLabel value="Asunto" />
+			<h:inputText value="#{backingInsertarIncidencia.i.detalleIncidencia}" />
+			<h:outputLabel value="Descripcion" />
+			<h:inputTextarea value="#{backingInsertarIncidencia.c.detallesComentario}" />
+			<h:commandButton action="#{backingInsertarIncidencia.insertarIncidencia()}"
+					value="Registrar">
+					<f:ajax execute="@form"
+						render="@all"></f:ajax>
+				</h:commandButton>
+		</h:panelGrid>
+	</h:form>
+</body>
 </html>

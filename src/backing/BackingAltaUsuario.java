@@ -9,6 +9,7 @@ import javax.inject.Named;
 import javax.persistence.RollbackException;
 
 import entidades.Departamento;
+import entidades.Grupousuario;
 import entidades.Role;
 import entidades.Usuario;
 import exceptions.UsuarioException;
@@ -85,6 +86,8 @@ public class BackingAltaUsuario implements Serializable {
 	public void altaUsuario() {
 	try {
 	Departamento departamentousuario = null;
+	Grupousuario id =null;
+	
 			if (departamentoseleccionado != 0) {
 			//	departamentousuario= depService.buscarDepartamentoById(departamentoseleccionado);
 				System.out.println("dep select"+departamentoseleccionado);
@@ -93,6 +96,9 @@ public class BackingAltaUsuario implements Serializable {
 			}
 			usuario.setDepartamentoBean(departamentousuario);
 			usuario.setRoles(rolService.buscarRolById(rolseleccionado));
+			//id.setRole(rolService.buscarRolById(rolseleccionado).get(0));
+			id.setUsuario(usuario);
+			usuario.setGrupousuario(id);
 			usuarioService.insertarUsuario(usuario);
 			FacesContext context = FacesContext.getCurrentInstance();
 			ResourceBundle archivomensajes = ResourceBundle.getBundle("resources.application",

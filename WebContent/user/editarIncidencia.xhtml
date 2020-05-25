@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+<f:metadata>
+			<f:viewParam name="idIncidencia" value="#{backingEditarIncidencia.idIncidencia}"/>
+			<f:viewAction action="#{backingEditarIncidencia.init()}" />
+
+</f:metadata>
+</h:head> 
+<h:body>
+<h:outputText value="#{backingEditarIncidencia.idIncidencia}" /> <br></br>
+<h:outputLabel value="Seccion Datos Incidencia" /><br></br>
+<h:outputLabel value="idIncidencia" />
+<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.idIncidencia}" /> <br></br>
+<h:outputLabel value="Detalle" />
+<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.detalleIncidencia}"/><br></br>
+<h:outputLabel value="Estado" />
+<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.estadoincidencia.descripcionEstado}"></h:outputText><br></br>
+<h:outputLabel value="FechaIncidencia" />
+<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.fechaIncidencia}">
+						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" /></h:outputText><br></br>
+<h:outputLabel value="Email" />
+<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.usuarioBean.email}">
+					</h:outputText><br></br>
+<h:outputLabel value="Departamento: " />
+<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.departamento.detalleDepartamento}">
+					</h:outputText><br></br>
+<h:outputLabel value="Prioridad" />
+<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.prioridadBean.descripcionPrioridad}">
+					</h:outputText><br></br>
+										
+<h:dataTable styleClass="tabla" id="listadoComentarios"
+				var="comentario"
+				value="#{backingEditarIncidencia.listadoComentario}">
+				<f:facet name="header">
+					<h:outputText
+						value="Listado de Comentarios de la Incidencia:  #{comentario.incidencia.idIncidencia}"></h:outputText>
+				</f:facet>
+				<h:column id="IdIncidencia">
+					<f:facet name="header">
+						<h:outputText value="fecha y hora">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{comentario.fechaComentario}">
+					<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+					</h:outputText>
+				</h:column>
+				<h:column id="usuario">
+					<f:facet name="header">
+						<h:outputText value="Usuario Incidencia">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{comentario.usuario.email}">
+					</h:outputText>
+				</h:column>
+				<h:column id="rol">
+					<f:facet name="header">
+						<h:outputText value="Rol de Usuario">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{comentario.usuario.roles.get(0).detalleRoles}">
+					</h:outputText>
+				</h:column>
+				<h:column id="descripcion">
+					<f:facet name="header">
+						<h:outputText value="Descripcion">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{comentario.detallesComentario}">
+					</h:outputText>
+				</h:column>
+			</h:dataTable>
+</h:body> 
+</html>
