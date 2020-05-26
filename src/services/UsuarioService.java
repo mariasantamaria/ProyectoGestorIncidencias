@@ -1,5 +1,5 @@
 package services;
-import java.util.List;
+
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.RollbackException;
 
-import entidades.Role;
+
 import entidades.Usuario;
 import exceptions.UsuarioException;
 
@@ -40,12 +40,23 @@ public class UsuarioService {
 			throw rbe;
 		}
     }
-    @SuppressWarnings("unchecked")
+   
    	public Usuario buscarUsuarioById(String email) {
    		return em.find(Usuario.class, email);
    	}
     public EntityManager getEntityManager() {
 		return em;
 	}
+    public void cambiarCon(String nuevacon, Usuario usuario) {
+    	//comporbar que el usuario existe
+    	//em.find(Usuario.class, usuario.getEmail());
+    	usuario.setPassword(nuevacon);
+    	try {
+    		em.merge(usuario);
+    	}catch(RollbackException rbe) {
+    		throw rbe;
+    	}
+   }
+    
     
 }

@@ -148,4 +148,6 @@ public class BackingListadoIncidencias implements Serializable{
 		idrol=rolService.getRolPorNombre(nombreusuario);
 		ini();
 	}
+	/**************************************************/
+	
 }

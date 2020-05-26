@@ -1,11 +1,114 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html >
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-<h:head></h:head> 
-<body> 
+<h:head>
+</h:head>
+<h:body>
 
-</body> 
+<h:panelGroup id="panelTab" styleClass="panelTabla"
+		rendered="#{backingAperturaIncidencia.paginacion.itemsCount>0}"
+		layout="block">	
+		<h:form id="frmResultadoBusquedaIncidencias" prependId="false">
+			<h:dataTable styleClass="tabla" id="tablasocios" var="incidencia"
+				value="#{backingAperturaIncidencia.listadoIncidencias}">
+				<f:facet name="header">
+					<h:outputText
+						value="Listado de Incidencias Usuario:  #{backingListadoIncidencias.nombreusuario}"></h:outputText>
+				</f:facet>
+				<h:column id="IdIncidencia">
+					<f:facet name="header">
+						<h:outputText value="IdIncidencia">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{incidencia.idIncidencia}">
+					</h:outputText>
+				</h:column>
+				<h:column id="usuario">
+					<f:facet name="header">
+						<h:outputText value="Usuario">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{incidencia.usuarioBean.email}">
+					</h:outputText>
+				</h:column>
+				<h:column id="detalleIncidencia">
+					<f:facet name="header">
+						<h:outputText value="detalleIncidencia">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{incidencia.detalleIncidencia}">
+					</h:outputText>
+				</h:column>
+				<h:column id="fechaIncidencia">
+					<f:facet name="header">
+						<h:outputText value="fechaIncidencia">
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="#{incidencia.fechaIncidencia}">
+						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+					</h:outputText>
+				</h:column>
+				<h:column id="estadoincidencia">
+					<f:facet name="header">
+						<h:outputText value="estadoincidencia">
+						</h:outputText>
+					</f:facet>
+					<h:outputText
+						value="#{incidencia.estadoincidencia.descripcionEstado}">
+					</h:outputText>
+				</h:column>
+				<h:column id="editar">
+				<f:facet name="header">
+						<h:outputText value="Eliminar">
+						</h:outputText>
+					</f:facet>
+					<h:commandButton
+					action="#{backingEliminar.eliminar(incidencia.idIncidencia)}"
+						value="Eliminar">
+						<f:ajax execute="@form"
+							listener="#{backingListadoIncidencias.resetPaginacion}"
+							render="@all"></f:ajax>
+					</h:commandButton>	
+				<h:link value="Editar" outcome="editarmanager">
+					<f:param name="idIncidencia" value="#{incidencia.idIncidencia}" />
+				</h:link>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+		<h:form id="frmListadoIncidencias" prependId="false">
+
+			<div class="navegacionTabla">
+				<h:outputText
+					value="Mostrando #{backingAperturaIncidencia.paginacion.primerElementoPagina}..#{backingAperturaIncidencia.paginacion.ultimoElementoPagina} de total: #{backingAperturaIncidencia.paginacion.itemsCount}" />
+
+				<h:commandLink id="anterior" value="Anterior">
+					<f:ajax execute="@form" render="@all"
+					rendered="#{backingAperturaIncidencia.paginacion.hayPaginaAnterior}"
+						listener="#{backingAperturaIncidencia.paginaAnterior()}" />
+				</h:commandLink>
+
+				<h:commandLink id="siguiente" value="Siguiente">
+					<f:ajax execute="@form" render="@all"
+					rendered="#{backingAperturaIncidencia.paginacion.hayPaginaAnterior}"
+						listener="#{backingAperturaIncidencia.paginaSiguiente()}" />
+				</h:commandLink>
+				<h:outputText value="Nº Resgistros a Mostrar"></h:outputText>
+				<h:selectOneMenu id="slctpaginacion"
+					value="#{backingAperturaIncidencia.slctnrpag}">
+					<f:selectItem itemLabel="5" itemValue="5" />
+					<f:selectItem itemLabel="10" itemValue="10" />
+					<f:selectItem itemLabel="15" itemValue="15" />
+					<f:selectItem itemLabel="20" itemValue="20" />
+					<f:ajax listener="#{backingAperturaIncidencia.resetPaginacion}"
+						render="@all" />
+				</h:selectOneMenu>
+			</div>
+	</h:form>
+	</h:panelGroup>
+</h:body> 
 </html>
+
+

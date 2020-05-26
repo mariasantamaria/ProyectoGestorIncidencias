@@ -25,6 +25,10 @@ public class EstadoService {
     public EstadoService() {
         // TODO Auto-generated constructor stub
     }
+    public Estadoincidencia buscarEstadoPorId(Long idestado) { 	
+		return em.find(Estadoincidencia.class,idestado);
+    	
+    }
     @SuppressWarnings("unchecked")
 	public List <Estadoincidencia> listadoEstado(String nombreusuario, Long estadoactual){
     	Usuario usuariologeado=em.find(Usuario.class, nombreusuario);

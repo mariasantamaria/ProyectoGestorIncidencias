@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<f:metadata>
+			<f:viewParam name="idIncidencia" value="#{backingEditarIncidencia.idIncidencia}"/>
+			<f:viewAction action="#{backingEditarIncidencia.init()}" />
+
+	</f:metadata>
+</h:head> 
+<body> 
+	<h:outputText value="#{backingEditarIncidencia.idIncidencia}" /> <br></br>
+	<h:outputLabel value="Seccion Datos Incidencia" /><br></br>
+	<h:inputTextarea id="comentario"
+			value="#{backingEditarIncidencia.comentario}"></h:inputTextarea>
+		<h:outputText value="#{backingEditarIncidencia.usuario.email}"></h:outputText>
+		<h:selectOneMenu value="#{backingEditarIncidencia.idestado}">
+			<f:selectItem itemLabel="#{backingEditarIncidencia.incidenciaseleccionada.estadoincidencia.descripcionEstado}" itemValue="#{backingEditarIncidencia.incidenciaseleccionada.estadoincidencia.idEstado}" />
+			<f:selectItem itemLabel="Abierta" itemValue="3"></f:selectItem>
+			<f:ajax render="@all" />
+		</h:selectOneMenu>
+		<h:selectOneMenu
+			value="#{backingEditarIncidencia.idDepartamento}"
+			rendered="#{backingEditarIncidencia.idestado == 3}">
+			<f:selectItem itemLabel="--Seleccione un departamento--"
+				itemDisabled="true" />
+			<f:selectItems
+				value="#{backingEditarIncidencia.listadoDepartamento}"
+				var="departamento" itemValue="#{departamento.idDepartamento}"
+				itemLabel="#{departamento.detalleDepartamento}" />
+		</h:selectOneMenu>
+		<h:commandButton id="registrar"
+			action="#{backingEditarIncidencia.prueba()}"
+			value="Cambiar" >
+				<f:ajax execute="@form" render="@all listadoComentarios "></f:ajax>
+		</h:commandButton>			
+		<h:messages globalOnly="true" infoClass="advertencia"></h:messages>
+	</h:form>
+</body> 
+</html>

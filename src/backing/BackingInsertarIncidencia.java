@@ -30,8 +30,8 @@ public class BackingInsertarIncidencia implements Serializable {
 	 */
 	private static final long serialVersionUID = 5517664588558550391L;
 	ExternalContext usuarioEc= FacesContext.getCurrentInstance().getExternalContext();
-	private Incidencia i= new Incidencia();
-	private Comentario c= new Comentario();
+	private Incidencia i;
+	private Comentario c;
 	private String nombreusuario=usuarioEc.getRemoteUser();
 	private String detalle;
 	private String descripcion;
@@ -102,12 +102,17 @@ public class BackingInsertarIncidencia implements Serializable {
 	public void insertarIncidencia() {
 		try {
 			Prioridad p=null;
+			i= new Incidencia();
+			c= new Comentario();
+			System.out.println("prioridad seleccionada"+prioridadseleccionada);
 			p= priService.buscarPrioridadById(prioridadseleccionada);
 			System.out.println("idincidencia"+i.getIdIncidencia());
 			i.setIdIncidencia(incidenciaService.getId());
+			i.setDetalleIncidencia(detalle);
 			System.out.println("idincidencia"+i.getIdIncidencia());
 			c.setIdcomentario(comentarioService.getId());
 			System.out.println("idcomentario"+c.getIdcomentario());
+			c.setDetallesComentario(descripcion);
 			incidenciaService.insertarIncidencia(nombreusuario, p,i, c);
 			FacesContext context = FacesContext.getCurrentInstance();
 			ResourceBundle archivomensajes = ResourceBundle.getBundle("resources.application",context.getViewRoot().getLocale());

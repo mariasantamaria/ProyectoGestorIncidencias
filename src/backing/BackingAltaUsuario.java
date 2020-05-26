@@ -83,6 +83,10 @@ public class BackingAltaUsuario implements Serializable {
 		this.departamentoseleccionado = departamentoseleccionado;
 	}
 	/*****************************************************/
+	public String salir() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "/seguridad/identificate.jsp?faces-redirect=true";
+	}
 	public void altaUsuario() {
 	try {
 	Departamento departamentousuario = null;

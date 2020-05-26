@@ -19,10 +19,14 @@
 						var="departamento" itemValue="#{departamento.idPrioridad}"
 						itemLabel="#{departamento.descripcionPrioridad}" />
 				</h:selectOneMenu>
-			<h:outputLabel value="Asunto" />
-			<h:inputText value="#{backingInsertarIncidencia.i.detalleIncidencia}" />
-			<h:outputLabel value="Descripcion" />
-			<h:inputTextarea value="#{backingInsertarIncidencia.c.detallesComentario}" />
+			<h:outputLabel value="Asunto Breve de la Incidencia" />
+			 <h:inputText value="#{backingInsertarIncidencia.detalle}" required="true" requiredMessage="Campo obligatorio">
+		 				<f:ajax event="blur" render="@this"></f:ajax>
+			</h:inputText>
+			<h:outputLabel value="Descripción más detallada" />
+			<h:inputTextarea value="#{backingInsertarIncidencia.descripcion}" required="true" requiredMessage="Campo obligatorio">
+					<f:ajax event="blur" render="@this"></f:ajax>
+			</h:inputTextarea>
 			<h:commandButton action="#{backingInsertarIncidencia.insertarIncidencia()}"
 					value="Registrar">
 					<f:ajax execute="@form"

@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+	<h:panelGroup rendered="#{backingInformacion.usuario.grupousuario.role.idRoles == 1}">
+		<h:outputLabel value="admin"></h:outputLabel>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{backingInformacion.usuario.grupousuario.role.idRoles == 2}">
+	<h:outputLabel value="manager"></h:outputLabel>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{backingInformacion.usuario.grupousuario.role.idRoles == 3}">
+	<h:outputLabel value="tecnico"></h:outputLabel>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{backingInformacion.usuario.grupousuario.role.idRoles == 4}">
+	<h:outputLabel value="usuaraio"></h:outputLabel>
+	</h:panelGroup>
+</body> 
+</html>

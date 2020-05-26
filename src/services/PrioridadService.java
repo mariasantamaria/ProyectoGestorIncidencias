@@ -28,9 +28,8 @@ public class PrioridadService {
    	public List<Prioridad> getPrioridad() {
    		return em.createNamedQuery("Prioridad.findAll").getResultList();
    	}
-    @SuppressWarnings("unchecked")
-	public List<Prioridad> buscarPrioridadById(int id) {
-		return em.createQuery("select p from Prioridad p where p.idPrioridad=:id order by p.idPrioridad").setParameter("id", id).getResultList();
+    public Prioridad buscarPrioridadById(int id) {
+		return (Prioridad) em.createQuery("select p from Prioridad p where p.idPrioridad=:id order by p.idPrioridad").setParameter("id", id).getSingleResult();
 	}
 
 }

@@ -157,30 +157,33 @@ public class IncidenciasService {
      * prioridad
      * departamento null -lo asigna el manager
      * usuario que realia la incidencia*/
-    public void insertarIncidencia(String usuario, Prioridad p,Incidencia i, Comentario c ) throws RollbackException   {
+    public void insertarIncidencia(String usuario, Prioridad p, Incidencia nuevaincidencia, Comentario nuevocomentario ) throws RollbackException   {
     	Usuario usarioIncidencia =em.find(Usuario.class, usuario);
     	//nueva
     	Estadoincidencia estadoIncidencia= em.find(Estadoincidencia.class,1L);
-    	System.out.println("id:"+i.getIdIncidencia());
-    	i.setDepartamento(null);
-    	i.setPrioridadBean(p);
+    	System.out.println("id:"+nuevaincidencia.getIdIncidencia());
+    	nuevaincidencia.setDepartamento(null);
+    	nuevaincidencia.setPrioridadBean(p);
     	//ASUNTO DE LA INCIDENCIA
-    	i.setEstadoincidencia(estadoIncidencia);
-    	i.setFechaIncidencia(new Date());
-    	i.setUsuarioBean(usarioIncidencia);
-    	if(c.getDetallesComentario() != null) {
+    	nuevaincidencia.setEstadoincidencia(estadoIncidencia);
+    	nuevaincidencia.setFechaIncidencia(new Date());
+    	nuevaincidencia.setUsuarioBean(usarioIncidencia);
+    	//if(c.getDetallesComentario() != null) {
    
-
-    		c.setFechaComentario(new Date());
-    		c.setIncidencia(i);
-    		c.setUsuario(usarioIncidencia);
-    	}
+    	nuevocomentario.setFechaComentario(new Date());
+    	nuevocomentario.setIncidencia(nuevaincidencia);
+    	nuevocomentario.setUsuario(usarioIncidencia);
+    	nuevaincidencia.addComentario(nuevocomentario);
+    	
+    	//}
     	//Comentario c= new Comentario();
     	try {	
-			em.persist(i);
-			if (c != null) {
-				em.persist(c);
-			}
+			em.persist(nuevaincidencia);
+			em.persist(nuevocomentario);
+			List<Comentario> listacomentarioscomentarios=nuevaincidencia.getComentarios();
+			listacomentarioscomentarios.add(nuevocomentario);
+			nuevaincidencia.setComentarios(listacomentarioscomentarios);
+    		em.persist(nuevaincidencia);
 		}catch (RollbackException rbe) {
 			throw rbe;
 		}
@@ -207,8 +210,32 @@ public class IncidenciasService {
     public long getTotalFiltro(String tipo) {
     	Query consulta = em.createQuery("SELECT count(inc) FROM Incidencia inc where UPPER(inc.estadoincidencia.idEstado) LIKE UPPER(:tipo)");
     	consulta.setParameter("tipo",tipo);
-    	return (Long) consulta.getSingleResult();
-    	
-    	
+    	return (Long) consulta.getSingleResult(); 	 	
 	}
+    public long getTotalFiltroEliminar(String cerrada, String rechazada) {
+    	Query consulta = em.createQuery("SELECT count(inc) FROM Incidencia inc where UPPER(inc.estadoincidencia.idEstado) LIKE UPPER(:rechazada) or UPPER(inc.estadoincidencia.idEstado) LIKE UPPER(:cerrada)");
+    	consulta.setParameter("rechazada",rechazada);
+    	consulta.setParameter("cerrada",cerrada);
+    	return (Long) consulta.getSingleResult(); 	 	
+	}
+    @SuppressWarnings("unchecked")
+   	public List<Incidencia> listadoIncidenciasEliminar(int primerResultado, int maxResultados,String cerrada, String rechazada) {
+       	Query consulta = em.createQuery("select i from Incidencia i where UPPER(i.estadoincidencia.idEstado) LIKE UPPER(:rechazada) or UPPER(i.estadoincidencia.idEstado) LIKE UPPER(:cerrada) order by i.fechaIncidencia desc ");
+       	consulta.setParameter("rechazada",rechazada);
+    	consulta.setParameter("cerrada",cerrada);
+       	consulta.setFirstResult(primerResultado);
+       	consulta.setMaxResults(maxResultados);
+       	List<Incidencia> listaIncidencias = consulta.getResultList();
+       	return listaIncidencias;
+       	
+   	}
+    //eliminar
+    public void eliminarIncidencia(Long idincidencia) throws RollbackException {
+    	Incidencia incidenciaEliminar =em.find(Incidencia.class,idincidencia);
+    	try {
+			em.remove(incidenciaEliminar);
+		} catch (RollbackException e) {
+			throw e;
+		}
+    }
 }
