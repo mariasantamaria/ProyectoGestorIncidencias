@@ -80,7 +80,6 @@ public class BackingEditarIncidencia implements Serializable {
 		listarDepartamento();
 	}
 	public void prueba() {
-		System.out.println("metodooo");
 		//comporbar si el departamento no es nulo e insertarlo a la incidencia
 		if(idDepartamento != null) {
 			Departamento departamento=departamentService.buscarDepartamentoById(idDepartamento);

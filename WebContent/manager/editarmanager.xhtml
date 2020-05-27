@@ -11,12 +11,12 @@
 
 	</f:metadata>
 </h:head> 
-<body> 
+<h:body> 
+	<h:form>
+	<h:outputLabel value="Incidencia Nuevas para Apertura y Asignación " /><br></br>
 	<h:outputText value="#{backingEditarIncidencia.idIncidencia}" /> <br></br>
-	<h:outputLabel value="Seccion Datos Incidencia" /><br></br>
-	<h:inputTextarea id="comentario"
-			value="#{backingEditarIncidencia.comentario}"></h:inputTextarea>
-		<h:outputText value="#{backingEditarIncidencia.usuario.email}"></h:outputText>
+	<h:outputLabel value="Nombre usuario que modifica " /><br></br>
+	<h:outputText value="#{backingEditarIncidencia.usuario.email}"></h:outputText>
 		<h:selectOneMenu value="#{backingEditarIncidencia.idestado}">
 			<f:selectItem itemLabel="#{backingEditarIncidencia.incidenciaseleccionada.estadoincidencia.descripcionEstado}" itemValue="#{backingEditarIncidencia.incidenciaseleccionada.estadoincidencia.idEstado}" />
 			<f:selectItem itemLabel="Abierta" itemValue="3"></f:selectItem>
@@ -31,7 +31,10 @@
 				value="#{backingEditarIncidencia.listadoDepartamento}"
 				var="departamento" itemValue="#{departamento.idDepartamento}"
 				itemLabel="#{departamento.detalleDepartamento}" />
-		</h:selectOneMenu>
+		</h:selectOneMenu><br></br>
+		<h:outputLabel value="Inserte comentario" /><br></br>
+		<h:inputTextarea id="comentario"
+			value="#{backingEditarIncidencia.comentario}"></h:inputTextarea>
 		<h:commandButton id="registrar"
 			action="#{backingEditarIncidencia.prueba()}"
 			value="Cambiar" >
@@ -39,5 +42,5 @@
 		</h:commandButton>			
 		<h:messages globalOnly="true" infoClass="advertencia"></h:messages>
 	</h:form>
-</body> 
+</h:body> 
 </html>

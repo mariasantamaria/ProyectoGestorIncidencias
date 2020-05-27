@@ -157,38 +157,42 @@ public class IncidenciasService {
      * prioridad
      * departamento null -lo asigna el manager
      * usuario que realia la incidencia*/
-    public void insertarIncidencia(String usuario, Prioridad p, Incidencia nuevaincidencia, Comentario nuevocomentario ) throws RollbackException   {
-    	Usuario usarioIncidencia =em.find(Usuario.class, usuario);
-    	//nueva
-    	Estadoincidencia estadoIncidencia= em.find(Estadoincidencia.class,1L);
-    	System.out.println("id:"+nuevaincidencia.getIdIncidencia());
-    	nuevaincidencia.setDepartamento(null);
-    	nuevaincidencia.setPrioridadBean(p);
-    	//ASUNTO DE LA INCIDENCIA
-    	nuevaincidencia.setEstadoincidencia(estadoIncidencia);
-    	nuevaincidencia.setFechaIncidencia(new Date());
-    	nuevaincidencia.setUsuarioBean(usarioIncidencia);
-    	//if(c.getDetallesComentario() != null) {
-   
-    	nuevocomentario.setFechaComentario(new Date());
-    	nuevocomentario.setIncidencia(nuevaincidencia);
-    	nuevocomentario.setUsuario(usarioIncidencia);
-    	nuevaincidencia.addComentario(nuevocomentario);
-    	
-    	//}
-    	//Comentario c= new Comentario();
-    	try {	
-			em.persist(nuevaincidencia);
-			em.persist(nuevocomentario);
-			List<Comentario> listacomentarioscomentarios=nuevaincidencia.getComentarios();
-			listacomentarioscomentarios.add(nuevocomentario);
-			nuevaincidencia.setComentarios(listacomentarioscomentarios);
-    		em.persist(nuevaincidencia);
+    //throws RollbackException
+public void insertarIncidencia(Usuario usuario, String asunto,String descripcion,Long idprioridad, Long idincidencia,Long idcomentario)throws RollbackException {
+    System.out.println("entra en el metodo");
+    Estadoincidencia estadoIncidencia= em.find(Estadoincidencia.class,1L);
+	System.out.println("Estado service"+estadoIncidencia.getDescripcionEstado());
+	Prioridad p=em.find(Prioridad.class,idprioridad);
+	System.out.println("prioridad"+p.getIdPrioridad());
+	List<Comentario>listadoComentarios;
+    	Incidencia i=new Incidencia();
+    	i.setUsuarioBean(usuario);
+    	i.setDepartamento(null);
+    	i.setPrioridadBean(p);
+    	i.setDetalleIncidencia(asunto);
+    	i.setFechaIncidencia(new Date());
+    	i.setIdIncidencia(idincidencia);
+    	i.setEstadoincidencia(estadoIncidencia);
+    	Comentario c=new Comentario();
+    	c.setFechaComentario(new Date());
+    	c.setIdcomentario(idcomentario);
+    	c.setDetallesComentario(descripcion);
+    	c.setIncidencia(i);
+    	c.setUsuario(usuario);
+    	try {
+    		
+    		em.persist(i);
+    		em.persist(c);
+    		//enlzar comentario con incidencia actualizar listado
+    		listadoComentarios=i.getComentarios();
+    		listadoComentarios.add(c);
+        	i.setComentarios(listadoComentarios);
+    		em.persist(i);
 		}catch (RollbackException rbe) {
 			throw rbe;
 		}
-    	
     }
+   
     //actualizar incidencia al editar
     public Incidencia actualizarIncidencia (Incidencia i) throws EJBException {
     	try {
@@ -229,9 +233,47 @@ public class IncidenciasService {
        	return listaIncidencias;
        	
    	}
+  /*  
+   * nullpointer usuario
+    public void crearIncidencia(String asunto,String descrip,String nombreusuario,Long idprioridad, Long idincidencia,Long idcomentario)throws RollbackException {
+    	Prioridad p=em.find(Prioridad.class,idprioridad);
+    	Usuario u=em.find(Usuario.class, nombreusuario);
+    	System.out.println("Uusario"+u.getEmail());
+    	Estadoincidencia estadoIncidencia= em.find(Estadoincidencia.class,1L);
+    	System.out.println("Estado service"+estadoIncidencia.getDescripcionEstado());
+    	System.out.println("prioridad"+p.getIdPrioridad());
+    	List<Comentario> listadoComentarios;
+        	Incidencia i=new Incidencia();
+        	i.setDepartamento(null);	
+        	i.setDetalleIncidencia(asunto);
+        	i.setFechaIncidencia(new Date());
+        	i.setIdIncidencia(idincidencia);
+        	i.setEstadoincidencia(estadoIncidencia);
+        	i.setPrioridadBean(p);
+        	i.setUsuarioBean(u); 	
+        	Comentario c=new Comentario();
+        	c.setFechaComentario(new Date());
+        	c.setDetallesComentario(descrip);
+        	c.setIncidencia(i);
+        	c.setUsuario(u);
+        	c.setIdcomentario(idcomentario);
+        	try {
+        		
+        		em.persist(i);
+        		em.persist(c);
+        		//sino no se actualiza bien añadir el ultimo
+        		listadoComentarios=i.getComentarios();
+        		listadoComentarios.add(c);
+            	i.setComentarios(listadoComentarios);
+        		em.persist(i);
+    		}catch (RollbackException rbe) {
+    			throw rbe;
+    		}
+        }*/
     //eliminar
     public void eliminarIncidencia(Long idincidencia) throws RollbackException {
     	Incidencia incidenciaEliminar =em.find(Incidencia.class,idincidencia);
+    	//eliminar en cascada en entidad
     	try {
 			em.remove(incidenciaEliminar);
 		} catch (RollbackException e) {

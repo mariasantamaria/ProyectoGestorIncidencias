@@ -12,6 +12,7 @@
 	<a href="/Proyecto/manager/aperturaincidencia.xhtml">Apertura y Asignación</a>
 	<a href="/Proyecto/administrador/eliminar.xhtml">Eliminar</a>
 	<a href="/Proyecto/user/informacion.xhtml">Información</a>
+	<a href="/Proyecto/user/cambiarcontrasena.xhtml">Cambiar Contraseña</a>
 	<h:commandLink action="#{backingAltaUsuario.salir()}">Salir</h:commandLink>
 
 	<h:messages globalOnly="true" layout="table" infoClass="advertencia"></h:messages>
@@ -95,8 +96,8 @@
 				<h:commandLink action="#{backingListadoIncidencias.editarIncidencia()}"
 								value="Editar">
 								<f:setPropertyActionListener
-									target="#{backingEditarIncidencia.incidenciaseleccionada}"
-									value="#{incidencia}">
+									target="#{backingEditarIncidencia.incidenciaseleccionada.idIncidencia}"
+									value="#{incidencia.idIncidencia}">
 								</f:setPropertyActionListener>
 							</h:commandLink> 
 				<h:link value="Editar" outcome="editarIncidencia">

@@ -5,6 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"> 
 
 <h:head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 <f:metadata>
 			<f:viewParam name="idIncidencia" value="#{backingEditarIncidencia.idIncidencia}"/>
 			<f:viewAction action="#{backingEditarIncidencia.init()}" />
@@ -12,28 +13,65 @@
 </f:metadata>
 </h:head> 
 <h:body>
-<h:outputText value="#{backingEditarIncidencia.idIncidencia}" /> <br></br>
+<div class="container">
 <h:outputLabel value="Seccion Datos Incidencia" /><br></br>
-<h:outputLabel value="idIncidencia" />
-<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.idIncidencia}" /> <br></br>
-<h:outputLabel value="Detalle" />
+<div class="row">
+	<div class="col-1">
+	<h:outputLabel value="idIncidencia" />
+	</div>
+	<div class="col-2">
+	<h:outputLabel value="Detalle" />
+	</div>
+	<div class="col-2">
+	<h:outputLabel value="Estado" />
+	</div>
+	<div class="col-2">
+	<h:outputLabel value="FechaIncidencia" />
+	</div>
+	<div class="col-2">
+	<h:outputLabel value="Email" />
+	</div>
+	<div class="col-2">
+	<h:outputLabel value="Departamento: " />
+	</div>
+	<div class="col-1">
+	<h:outputLabel value="Prioridad" />
+	</div>	
+</div>
+	<div class="row">
+	<div class="col-1">
+	<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.idIncidencia}" /> <br></br>
+	</div>
+	<div class="col-2">
 <h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.detalleIncidencia}"/><br></br>
-<h:outputLabel value="Estado" />
-<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.estadoincidencia.descripcionEstado}"></h:outputText><br></br>
-<h:outputLabel value="FechaIncidencia" />
+	</div>
+	<div class="col-2">
+	<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.estadoincidencia.descripcionEstado}"></h:outputText><br></br>
+	</div>
+	<div class="col-2">
 <h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.fechaIncidencia}">
 						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" /></h:outputText><br></br>
-<h:outputLabel value="Email" />
-<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.usuarioBean.email}">
+	</div>
+	<div class="col-2">
+	<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.usuarioBean.email}">
 					</h:outputText><br></br>
-<h:outputLabel value="Departamento: " />
+	</div>
+	<div class="col-2">
+	
 <h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.departamento.detalleDepartamento}">
 					</h:outputText><br></br>
-<h:outputLabel value="Prioridad" />
-<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.prioridadBean.descripcionPrioridad}">
+	
+	</div>
+	<div class="col-1">
+	<h:outputText value="#{backingEditarIncidencia.incidenciaseleccionada.prioridadBean.descripcionPrioridad}">
 					</h:outputText><br></br>
+	</div>	
+</div>
+	<h:outputText value="#{backingEditarIncidencia.idIncidencia}" /> <br></br>
+
+</div>
 <h:panelGroup>								
-<h:dataTable styleClass="tabla" id="listadoComentarios"
+<h:dataTable styleClass="tabla" id="listado"
 				var="comentario"
 				value="#{backingEditarIncidencia.listadoComentario}">
 				<f:facet name="header">
@@ -75,13 +113,30 @@
 				</h:column>
 			</h:dataTable>
 </h:panelGroup>
-			SECCION 3<br></br>
-FORMULARIO MODIFICACION<br></br>
+
+<h:outputLabel>Modificacion Incidencia</h:outputLabel>
 	<h:form>
-Comentario:
-	<h:inputTextarea id="comentario"
-			value="#{backingEditarIncidencia.comentario}"></h:inputTextarea>
-		<h:outputText value="#{backingEditarIncidencia.usuario.email}"></h:outputText>
+<div class="container">
+<div class="row">
+<div class="col-3">
+	<h:outputLabel>Usuario que modifica</h:outputLabel><br></br>
+</div>
+<div class="col-3">
+	<h:outputLabel>Inserte COmentario</h:outputLabel><br></br>
+</div>
+<div class="col-3">
+	<h:outputLabel>Selecciona estado</h:outputLabel><br></br>
+</div>
+</div>
+<div class="row">
+<div class="col-3">
+	<h:outputText value="#{backingEditarIncidencia.usuario.email}"></h:outputText><br></br>
+</div>
+<div class="col-3">
+	<h:inputTextarea id="comentario" value="#{backingEditarIncidencia.comentario}"></h:inputTextarea><br></br>
+</div>
+<div class="col-3">
+		
 	<!-- Nueva admin y manager -->
 		<h:selectOneMenu value="#{backingEditarIncidencia.idestado}"
 			rendered="#{(backingEditarIncidencia.usuario.grupousuario.id.idrol==1 or backingEditarIncidencia.usuario.grupousuario.id.idrol==2) and backingEditarIncidencia.incidenciaseleccionada.estadoincidencia.idEstado==1}">	
@@ -118,20 +173,28 @@ Comentario:
 
 		<h:selectOneMenu
 			value="#{backingEditarIncidencia.idDepartamento}"
-			rendered="#{(backingEditarIncidencia.usuario.grupousuario.id.idrol==1 or backingEditarIncidencia.usuario.grupousuario.id.idrol==2) and backingEditarIncidencia.incidenciaseleccionada.estadoincidencia.idEstado==1 and backingEditarIncidencia.idestado == 3 }">
-			<f:selectItem itemLabel="--Seleccione un departamento--"
+			rendered="#{(backingEditarIncidencia.usuario.grupousuario.id.idrol==1 or backingEditarIncidencia.usuario.grupousuario.id.idrol==2) and backingEditarIncidencia.incidenciaseleccionada.estadoincidencia.idEstado==3 and backingEditarIncidencia.idestado == 3  and backingEditarIncidencia.incidenciaseleccionada.departamento == null }">
+			<f:selectItem itemLabel="Seleccione un departamento"
 				itemDisabled="true" />
 			<f:selectItems
 				value="#{backingEditarIncidencia.listadoDepartamento}"
 				var="departamento" itemValue="#{departamento.idDepartamento}"
 				itemLabel="#{departamento.detalleDepartamento}" />
 		</h:selectOneMenu>
-		<h:commandButton id="registrar"
+		
+		<div class="col-3">
+	<h:commandButton id="registrar"
 			action="#{backingEditarIncidencia.prueba()}"
 			value="Cambiar" >
-				<f:ajax execute="@form" render="@all listadoComentarios "></f:ajax>
-		</h:commandButton>			
+				<f:ajax execute="@form" render="@all listado"></f:ajax>
+		</h:commandButton>	
+</div>
+				
 		<h:messages globalOnly="true" infoClass="advertencia"></h:messages>
+		</div>
+		</div>
+		</div>
 	</h:form>
+
 </h:body> 
 </html>

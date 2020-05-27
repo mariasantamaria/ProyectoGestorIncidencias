@@ -1,13 +1,16 @@
 package services;
 
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.RollbackException;
 
-
+import entidades.Grupousuario;
+import entidades.GrupousuarioPK;
 import entidades.Usuario;
 import exceptions.UsuarioException;
 
@@ -26,6 +29,7 @@ public class UsuarioService {
     
     public void insertarUsuario(Usuario usuario) throws RollbackException, UsuarioException{
     	Usuario usuarioDarAlta= em.find(Usuario.class, usuario.getEmail());
+    	//GrupousuarioPK id=usuarioDarAlta.getGrupousuario().getId();
     	//comprobar que no este en la base de datos
     	if(usuarioDarAlta != null) {
     		throw new UsuarioException("Error. El usuario ya existe.");
@@ -40,7 +44,10 @@ public class UsuarioService {
 			throw rbe;
 		}
     }
-   
+    @SuppressWarnings("unchecked")
+  	public List<Usuario> getUsuarioById(String email) {
+      	return em.createQuery("Select u from Usuario u where u.email=:email").setParameter("email", email).getResultList();
+      }
    	public Usuario buscarUsuarioById(String email) {
    		return em.find(Usuario.class, email);
    	}

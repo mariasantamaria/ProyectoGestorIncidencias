@@ -26,7 +26,7 @@ public class Comentario implements Serializable {
 	private Date fechaComentario;
 
 	//bi-directional many-to-one association to Incidencia
-	@ManyToOne
+	@ManyToOne (cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="IDINCIDENCIA")
 	private Incidencia incidencia;
 

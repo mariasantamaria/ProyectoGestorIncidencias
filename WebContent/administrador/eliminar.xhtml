@@ -7,16 +7,17 @@
 <h:head>
 </h:head>
 <h:body>
-
+	<a href="../user/home.xhtml">Volver</a>
 <h:panelGroup id="panelTab" styleClass="panelTabla"
-		rendered="#{backingAperturaIncidencia.paginacion.itemsCount>0}"
+		rendered="#{backingEliminarIncidencia.paginacion.itemsCount>0}"
 		layout="block">	
 		<h:form id="frmResultadoBusquedaIncidencias" prependId="false">
+		<h:messages globalOnly="true" infoClass="advertencia"></h:messages>
 			<h:dataTable styleClass="tabla" id="tablasocios" var="incidencia"
-				value="#{backingAperturaIncidencia.listadoIncidencias}">
+				value="#{backingEliminarIncidencia.listadoIncidencias}">
 				<f:facet name="header">
 					<h:outputText
-						value="Listado de Incidencias Usuario:  #{backingListadoIncidencias.nombreusuario}"></h:outputText>
+						value="Listado de Incidencias Reachazadas o Eliminadas"></h:outputText>
 				</f:facet>
 				<h:column id="IdIncidencia">
 					<f:facet name="header">
@@ -66,10 +67,10 @@
 						</h:outputText>
 					</f:facet>
 					<h:commandButton
-					action="#{backingEliminar.eliminar(incidencia.idIncidencia)}"
+					action="#{backingEliminarIncidencia.eliminarIncidencia(incidencia.idIncidencia)}"
 						value="Eliminar">
 						<f:ajax execute="@form"
-							listener="#{backingListadoIncidencias.resetPaginacion}"
+							listener="#{backingListadoIncidencias.resetPaginacion()}"
 							render="@all"></f:ajax>
 					</h:commandButton>	
 				<h:link value="Editar" outcome="editarmanager">
@@ -82,27 +83,27 @@
 
 			<div class="navegacionTabla">
 				<h:outputText
-					value="Mostrando #{backingAperturaIncidencia.paginacion.primerElementoPagina}..#{backingAperturaIncidencia.paginacion.ultimoElementoPagina} de total: #{backingAperturaIncidencia.paginacion.itemsCount}" />
+					value="Mostrando #{backingEliminarIncidencia.paginacion.primerElementoPagina}..#{backingEliminarIncidencia.paginacion.ultimoElementoPagina} de total: #{backingEliminarIncidencia.paginacion.itemsCount}" />
 
 				<h:commandLink id="anterior" value="Anterior">
 					<f:ajax execute="@form" render="@all"
-					rendered="#{backingAperturaIncidencia.paginacion.hayPaginaAnterior}"
-						listener="#{backingAperturaIncidencia.paginaAnterior()}" />
+					rendered="#{backingEliminarIncidencia.paginacion.hayPaginaAnterior}"
+						listener="#{backingEliminarIncidencia.paginaAnterior()}" />
 				</h:commandLink>
 
 				<h:commandLink id="siguiente" value="Siguiente">
 					<f:ajax execute="@form" render="@all"
-					rendered="#{backingAperturaIncidencia.paginacion.hayPaginaAnterior}"
-						listener="#{backingAperturaIncidencia.paginaSiguiente()}" />
+					rendered="#{backingEliminarIncidencia.paginacion.hayPaginaAnterior}"
+						listener="#{backingEliminarIncidencia.paginaSiguiente()}" />
 				</h:commandLink>
 				<h:outputText value="Nº Resgistros a Mostrar"></h:outputText>
 				<h:selectOneMenu id="slctpaginacion"
-					value="#{backingAperturaIncidencia.slctnrpag}">
+					value="#{backingEliminarIncidencia.slctnrpag}">
 					<f:selectItem itemLabel="5" itemValue="5" />
 					<f:selectItem itemLabel="10" itemValue="10" />
 					<f:selectItem itemLabel="15" itemValue="15" />
 					<f:selectItem itemLabel="20" itemValue="20" />
-					<f:ajax listener="#{backingAperturaIncidencia.resetPaginacion}"
+					<f:ajax listener="#{backingEliminarIncidencia.resetPaginacion}"
 						render="@all" />
 				</h:selectOneMenu>
 			</div>

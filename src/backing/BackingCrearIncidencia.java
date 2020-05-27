@@ -128,7 +128,7 @@ public class BackingCrearIncidencia implements Serializable {
 		try {
 			Prioridad p=null;
 			p= prioridadService.buscarPrioridadById(idPrioridad);
-			incidenciaService.insertarIncidencia(nombreusuario, p,detalle,descripcion);
+			//incidenciaService.insertarIncidencia(nombreusuario, p,detalle,descripcion);
 			FacesContext context = FacesContext.getCurrentInstance();
 			ResourceBundle archivomensajes = ResourceBundle.getBundle("resources.application",context.getViewRoot().getLocale());
 			context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO,archivomensajes.getString("generico.registroCreadoConExito"), archivomensajes.getString("generico.registroCreadoConExito")));

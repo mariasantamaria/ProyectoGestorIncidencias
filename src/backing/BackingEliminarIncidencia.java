@@ -97,8 +97,7 @@ public class BackingEliminarIncidencia implements Serializable {
 				ResourceBundle archivomensajes = ResourceBundle.getBundle("resources.application",
 						context.getViewRoot().getLocale());
 				context.addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO,
-								archivomensajes.getString("generico.registroCreadoConExito"),
+						new FacesMessage(FacesMessage.SEVERITY_INFO,archivomensajes.getString("generico.registroCreadoConExito"),
 								archivomensajes.getString("generico.registroCreadoConExito")));
 			//volver a listar
 			paginacion=null;

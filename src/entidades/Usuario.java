@@ -33,7 +33,7 @@ public class Usuario implements Serializable {
 	private List<Comentario> comentarios;
 
 	//bi-directional one-to-one association to Grupousuario
-	@OneToOne(mappedBy="usuario")
+	@OneToOne(mappedBy="usuario" ,cascade = { CascadeType.PERSIST } )
 	private Grupousuario grupousuario;
 
 	//bi-directional many-to-one association to Incidencia

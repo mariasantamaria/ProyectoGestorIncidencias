@@ -132,7 +132,7 @@ public class BackingListadoIncidencias implements Serializable{
 	}
 
 	public void resetPaginacion() {
-		
+		tipoBusqueda="%";
 		int nuevapagina = (paginacion.getPrimerElementoPagina() / slctnrpag);
 		paginacion.setNrpag(slctnrpag);
 		paginacion.setPagina(nuevapagina);

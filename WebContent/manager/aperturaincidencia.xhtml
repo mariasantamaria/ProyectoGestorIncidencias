@@ -68,8 +68,12 @@
 				<h:commandLink action="#{backingListadoIncidencias.editarIncidencia()}"
 								value="Editar">
 								<f:setPropertyActionListener
-									target="#{backingEditarIncidencia.incidenciaseleccionada}"
-									value="#{incidencia}">
+									target="#{backingEditarIncidencia.incidenciaseleccionada.idIncidencia}"
+									value="#{incidencia.idIncidencia}">
+								</f:setPropertyActionListener>
+								<f:setPropertyActionListener
+									target="#{backingEditarIncidencia.nombreusuario}"
+									value="#{2}">
 								</f:setPropertyActionListener>
 							</h:commandLink> 
 				<h:link value="Editar" outcome="editarmanager">

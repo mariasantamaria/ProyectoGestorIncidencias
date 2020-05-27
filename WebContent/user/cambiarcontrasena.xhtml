@@ -8,23 +8,15 @@
 <link rel="stylesheet" type="text/css" href="../resources/estilos.css" />
 </h:head> 
 <body> 
-<a href="/Proyecto/user/home.xhtml">Index</a>
+<a href="../user/home.xhtml">Volver</a>
 		<h:form id="formcontrasena">
 			<h:messages globalOnly="true" infoClass="advertencia"></h:messages>
 			<h:panelGrid>
 			<h:outputLabel value="Modificación de constraseña"></h:outputLabel>
 			<h:outputText value="Usuario:"></h:outputText>
 			<h:outputText value="#{backingCambiarCrontrasena.nombreusuario}"></h:outputText>
-			<h:outputLabel value="Contraseña anterior"></h:outputLabel>
-				<h:inputText value="#{backingCambiarCrontrasena.anterior}"
-					required="true" requiredMessage="Campo obligatorio">
-				</h:inputText>
 				<h:outputLabel value="Nueva contraseña"></h:outputLabel>
 				<h:inputText value="#{backingCambiarCrontrasena.nueva}"
-					required="true" requiredMessage="Campo obligatorio">
-				</h:inputText>
-				<h:outputLabel value="Repita nueva contraseña"></h:outputLabel>
-				<h:inputText value="#{backingCambiarCrontrasena.repetida}"
 					required="true" requiredMessage="Campo obligatorio">
 				</h:inputText>
 				<h:commandButton action="#{backingCambiarCrontrasena.cambiarContrasena()}"
